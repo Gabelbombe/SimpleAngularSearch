@@ -7,7 +7,9 @@ if(! isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ('XMLHttpRequest' === $_SERVE
     exit('Forbidden');
 }
 
-$allowed = require_once(APP_PATH . '/src/config/config.php');
+$config = require_once(APP_PATH . '/src/config/config.php');
+          require_once(APP_PATH . '/src/Database/DataMapper.php');
+          require_once(APP_PATH . '/src/Models/Search.php');
 
 if (isset($_POST) && ! empty($_POST))
 {
@@ -19,16 +21,19 @@ if (isset($_POST) && ! empty($_POST))
         'allow' => FILTER_STRUCT_FULL_TRIM,
     ]);
 
-    /* Abandoned
-    foreach ($allowed AS $allow => $condition)
-    {
-        if ($condition && isset($_POST[$allow]))
+        /* Abandoned
+        foreach ($allowed AS $allow => $condition)
         {
-            // ...
+            if ($condition && isset($_POST[$allow]))
+            {
+                // ...
+            }
         }
-    }
 
-    */
+        */
 
+    $search = New \Models\Search();
+
+        echo $search->query();
 
 } else { /* ... */ }
