@@ -17,23 +17,13 @@ if (isset($_POST) && ! empty($_POST))
 
     $filter = New \Helper\Filter();
     $clean  = $filter->filterStructUtf8(INPUT_POST, [
-        'query' => FILTER_STRUCT_FORCE_ARRAY | FILTER_STRUCT_TRIM,
         'allow' => FILTER_STRUCT_FULL_TRIM,
+        'query' => '',
     ]);
 
-        /* Abandoned
-        foreach ($allowed AS $allow => $condition)
-        {
-            if ($condition && isset($_POST[$allow]))
-            {
-                // ...
-            }
-        }
-
-        */
-
     $search = New \Models\Search();
-
-        echo $search->query();
+    echo ('true' != $clean['allow'] || empty($clean['query']))
+        ? 'Broke the interwebs...'
+        : $search->query();
 
 } else { /* ... */ }
